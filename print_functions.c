@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 22:29:03 by lothieve          #+#    #+#             */
-/*   Updated: 2019/11/21 15:10:22 by lothieve         ###   ########.fr       */
+/*   Updated: 2019/11/22 13:11:57 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 #include <unistd.h>
 #include <limits.h>
 
-size_t	ft_strlen(const char *s)
+size_t
+	ft_strlen(const char *s)
 {
 	size_t l;
 
@@ -24,7 +25,8 @@ size_t	ft_strlen(const char *s)
 	return (l);
 }
 
-int	ft_putchar_f(char c, t_fmt fdat, int fd)
+int
+	ft_putchar_f(char c, t_fmt fdat, int fd)
 {
 	int		p;
 
@@ -37,15 +39,17 @@ int	ft_putchar_f(char c, t_fmt fdat, int fd)
 	return (p > 1 ? p : 1);
 }
 
-int	ft_putstr_f(const char *s, t_fmt fdat, int fd)
+int
+	ft_putstr_f(const char *s, t_fmt fdat, int fd)
 {
-	size_t	l;
+	int		l;
 	int		p;
 
 	if (!s)
-		return(ft_putstr_f("(null)", fdat, fd));
+		return (ft_putstr_f("(null)", fdat, fd));
 	p = fdat.padding > 0 ? fdat.padding : -fdat.padding;
 	l = ft_strlen(s);
+	fdat.precision = fdat.precision < 0 ? l : fdat.precision;
 	l = l > fdat.precision ? fdat.precision : l;
 	while (fdat.padding > 0 && fdat.padding-- > l)
 		write(fd, &fdat.padchar, 1);

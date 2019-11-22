@@ -6,11 +6,28 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 21:37:05 by lothieve          #+#    #+#             */
-/*   Updated: 2019/11/21 16:30:48 by lothieve         ###   ########.fr       */
+/*   Updated: 2019/11/22 11:54:33 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+
+int
+	is_in_set(char c)
+{
+	int i;
+	int l;
+
+	i = 0;
+	l = ft_strlen(HANDLED_FLAGS);
+	while (i < l)
+	{
+		if (c == HANDLED_FLAGS[i])
+			return (1);
+		i++;
+	}
+	return (0);
+}
 
 int
 	is_nflag(char c)
@@ -52,6 +69,14 @@ int
 		return (ft_atoi(format));
 }
 
+t_fmt
+	reformat(t_fmt fdat)
+{
+	if (fdat.padding < 0 || fdat.precision > 0)
+		fdat.padchar = ' ';
+	return (fdat);
+}
+
 int
 	handle_format(const char *format, va_list args)
 {
@@ -60,7 +85,7 @@ int
 	fdat.padchar = ' ';
 	fdat.precision = -1;
 	fdat.padding = 0;
-	while (*format && (!ft_isalpha(*format)))
+	while (*format && (!is_in_set(*format)))
 	{
 		if (*format == '.')
 		{
@@ -70,7 +95,6 @@ int
 		}
 		else if (*format == '-')
 		{
-			fdat.padchar = ' ';
 			if (is_nflag(*(format + 1)))
 				format++;
 			fdat.padding = -get_value(format, args);
@@ -87,17 +111,16 @@ int
 		if (ft_isdigit(*format) && *format != '0')
 			while (ft_isdigit(*format))
 				format++;
-		else if (!ft_isalpha(*format))
+		else if (!is_in_set(*format))
 			format++;
 	}
-	return (print_format(*format, args, fdat));
+	return (print_format(*format, args, reformat(fdat)));
 }
 
 int
 	ft_printf(const char *format, ...)
 {
 	int			i;
-	int			l;
 	va_list		args;
 
 	i = 0;
@@ -112,7 +135,8 @@ int
 		if (*format == '%')
 		{
 			i += handle_format(++format, args);
-			while (*format && !ft_isalpha(*(format - 1)))
+			format++;
+			while (*format && !is_in_set(*(format - 1)))
 				format++;
 		}
 	}

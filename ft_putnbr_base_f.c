@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/17 15:30:54 by lothieve          #+#    #+#             */
-/*   Updated: 2019/11/21 16:51:22 by lothieve         ###   ########.fr       */
+/*   Updated: 2019/11/22 13:06:38 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,15 @@ int
 	int	l;
 	int i;
 
-	l = num_len(addr, ft_strlen(base)) + 2;
+	l = num_len(addr, ft_strlen(base)) - addr ? 2 : 3;
 	i = l;
 	while (fdat.padding > i++)
 		write(1, &fdat.padchar, 1);
 	write(1, "0x", 2);
-	ft_putnbr_base_f2(addr, base, ft_strlen(base), fdat.precision);
+	if (!addr)
+		write(1, base, 1);
+	else
+		ft_putnbr_base_f2(addr, base, ft_strlen(base), fdat.precision);
 	if (fdat.padding < 0)
 	{
 		fdat.padding *= -1;
@@ -66,23 +69,24 @@ int
 	int					l;
 	int					i;
 
-	if (fdat.precision != -1)
-		fdat.padchar = ' ';
 	if (nb == 0 && fdat.precision < 0)
 		return (ft_putchar_f(*base, fdat, 1));
 	n = nb < 0 ? -nb : nb;
 	l = num_len(n, ft_strlen(base));
 	l = l > fdat.precision ? l : fdat.precision;
-	i = nb >= 0 ? l : l + 1;
-	while (fdat.padding > i++)
+	l = nb >= 0 ? l : l + 1;
+	i = l;
+	if (nb < 0 && fdat.padchar == '0')
+		write(1, "-", 1);
+	while (fdat.padding > 0 && fdat.padding > i++)
 		write(1, &fdat.padchar, 1);
-	if (nb < 0)
+	if (nb < 0 && fdat.padchar == ' ')
 		write(1, "-", 1);
 	ft_putnbr_base_f2(n, base, ft_strlen(base), fdat.precision);
 	if (fdat.padding < 0)
 	{
 		fdat.padding *= -1;
-		while (fdat.padding >= i++)
+		while (fdat.padding > i++)
 			write(1, &fdat.padchar, 1);
 	}
 	return (fdat.padding > l ? fdat.padding : l);
