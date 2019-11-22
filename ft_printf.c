@@ -6,36 +6,11 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 21:37:05 by lothieve          #+#    #+#             */
-/*   Updated: 2019/11/22 14:02:18 by lothieve         ###   ########.fr       */
+/*   Updated: 2019/11/22 14:10:54 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-
-int
-	is_in_set(char c)
-{
-	int i;
-	int l;
-
-	i = 0;
-	l = ft_strlen(HANDLED_FLAGS);
-	while (i < l)
-	{
-		if (c == HANDLED_FLAGS[i])
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
-int
-	is_nflag(char c)
-{
-	if (c == '*' || ft_isdigit(c))
-		return (1);
-	return (0);
-}
 
 int
 	print_format(char f, va_list args, t_fmt fdat)
@@ -60,30 +35,8 @@ int
 }
 
 int
-	get_value(const char *format, va_list args)
+	handle_format2(const char *format, va_list args, t_fmt fdat)
 {
-	if (*format == '*')
-		return (va_arg(args, int));
-	else
-		return (ft_atoi(format));
-}
-
-t_fmt
-	reformat(t_fmt fdat)
-{
-	if (fdat.padding < 0 || fdat.precision > 0)
-		fdat.padchar = ' ';
-	return (fdat);
-}
-
-int
-	handle_format(const char *format, va_list args)
-{
-	t_fmt	fdat;
-
-	fdat.padchar = ' ';
-	fdat.precision = -1;
-	fdat.padding = 0;
 	while (*format && (!is_in_set(*format)))
 	{
 		if (*format == '.')
@@ -106,6 +59,17 @@ int
 			format++;
 	}
 	return (print_format(*format, args, reformat(fdat)));
+}
+
+int
+	handle_format(const char *format, va_list args)
+{
+	t_fmt	fdat;
+
+	fdat.padchar = ' ';
+	fdat.precision = -1;
+	fdat.padding = 0;
+	return (handle_format2(format, args, fdat));
 }
 
 int

@@ -6,11 +6,11 @@
 #    By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/08/06 15:35:45 by lothieve          #+#    #+#              #
-#    Updated: 2019/11/21 17:10:28 by lothieve         ###   ########.fr        #
+#    Updated: 2019/11/22 14:14:05 by lothieve         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRCS = ft_atoi.c ft_isalnum.c ft_printf.c ft_putnbr_base_f.c print_functions.c ft_isalnum.c
+SRCS = ft_atoi.c ft_isalnum.c ft_printf.c ft_putnbr_base_f.c print_functions.c ft_isalnum.c ft_printf_utils.c
 
 INCLUDES = includes
 
