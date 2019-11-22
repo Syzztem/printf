@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 21:37:05 by lothieve          #+#    #+#             */
-/*   Updated: 2019/11/22 13:56:08 by lothieve         ###   ########.fr       */
+/*   Updated: 2019/11/22 14:02:18 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,21 +87,16 @@ int
 	while (*format && (!is_in_set(*format)))
 	{
 		if (*format == '.')
-		{
-			format += is_nflag(*(format + 1)) ? 1 : 0;
-			fdat.precision = get_value(format, args);
-		}
+			fdat.precision = get_value(format + 1, args);
 		else if (*format == '-')
-		{
-			format += is_nflag(*(format + 1)) ? 1 : 0;
-			fdat.padding = -get_value(format, args);
-		}
+			fdat.padding = -get_value(format + 1, args);
 		else if (*format == '0' && fdat.padding >= 0 && fdat.precision < 0)
 		{
 			fdat.padchar = '0';
-			format += is_nflag(*(format + 1)) ? 1 : 0;
-			fdat.padding = get_value(format, args);
+			fdat.padding = get_value(format + 1, args);
 		}
+		if (*format == '.' || *format == '0' || *format == '-')
+			format += is_nflag(*(format + 1)) ? 1 : 0;
 		else if (ft_isdigit(*format) || *format == '*')
 			fdat.padding = get_value(format, args);
 		if (ft_isdigit(*format) && *format != '0')
