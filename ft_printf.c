@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 21:37:05 by lothieve          #+#    #+#             */
-/*   Updated: 2019/11/22 14:10:54 by lothieve         ###   ########.fr       */
+/*   Updated: 2019/11/22 14:35:13 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int
 		if (*format == '.')
 			fdat.precision = get_value(format + 1, args);
 		else if (*format == '-')
-			fdat.padding = -get_value(format + 1, args);
+			fdat.padding = -ft_abs(get_value(format + 1, args));
 		else if (*format == '0' && fdat.padding >= 0 && fdat.precision < 0)
 		{
 			fdat.padchar = '0';

@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 22:40:49 by lothieve          #+#    #+#             */
-/*   Updated: 2019/11/22 14:18:14 by lothieve         ###   ########.fr       */
+/*   Updated: 2019/11/22 14:35:17 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ typedef struct	s_fmt
 	int		precision;
 }				t_fmt;
 
+int				ft_abs(int n);
 int				get_value(const char *format, va_list args);
 int				ft_printf(const char *format, ...);
 int				is_in_set(char c);

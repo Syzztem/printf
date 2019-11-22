@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/17 15:30:54 by lothieve          #+#    #+#             */
-/*   Updated: 2019/11/22 13:06:38 by lothieve         ###   ########.fr       */
+/*   Updated: 2019/11/22 17:23:38 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,18 @@ int
 	int	l;
 	int i;
 
-	l = num_len(addr, ft_strlen(base)) - addr ? 2 : 3;
+	l = num_len(addr, ft_strlen(base)) + (addr ? 2 : 3);
 	i = l;
 	while (fdat.padding > i++)
 		write(1, &fdat.padchar, 1);
 	write(1, "0x", 2);
 	if (!addr)
-		write(1, base, 1);
+	{
+		if (fdat.precision != 0)
+			write(1, base, 1);
+		else
+			l--;
+	}
 	else
 		ft_putnbr_base_f2(addr, base, ft_strlen(base), fdat.precision);
 	if (fdat.padding < 0)

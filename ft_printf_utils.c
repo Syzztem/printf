@@ -6,11 +6,17 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 14:10:02 by lothieve          #+#    #+#             */
-/*   Updated: 2019/11/22 14:10:49 by lothieve         ###   ########.fr       */
+/*   Updated: 2019/11/22 17:14:12 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+
+int
+	ft_abs(int n)
+{
+	return (n > 0 ? n : -n);
+}
 
 int
 	get_value(const char *format, va_list args)
@@ -24,7 +30,7 @@ int
 t_fmt
 	reformat(t_fmt fdat)
 {
-	if (fdat.padding < 0 || fdat.precision > 0)
+	if (fdat.padding < 0 || fdat.precision >= 0)
 		fdat.padchar = ' ';
 	return (fdat);
 }
