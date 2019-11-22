@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 21:37:05 by lothieve          #+#    #+#             */
-/*   Updated: 2019/11/22 11:54:33 by lothieve         ###   ########.fr       */
+/*   Updated: 2019/11/22 13:56:08 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ int
 int
 	get_value(const char *format, va_list args)
 {
-
 	if (*format == '*')
 		return (va_arg(args, int));
 	else
@@ -89,21 +88,18 @@ int
 	{
 		if (*format == '.')
 		{
-			if (is_nflag(*(format + 1)))
-				format++;
+			format += is_nflag(*(format + 1)) ? 1 : 0;
 			fdat.precision = get_value(format, args);
 		}
 		else if (*format == '-')
 		{
-			if (is_nflag(*(format + 1)))
-				format++;
+			format += is_nflag(*(format + 1)) ? 1 : 0;
 			fdat.padding = -get_value(format, args);
 		}
 		else if (*format == '0' && fdat.padding >= 0 && fdat.precision < 0)
 		{
 			fdat.padchar = '0';
-			if (is_nflag(*(format + 1)))
-				format++;
+			format += is_nflag(*(format + 1)) ? 1 : 0;
 			fdat.padding = get_value(format, args);
 		}
 		else if (ft_isdigit(*format) || *format == '*')
